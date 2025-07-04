@@ -39,14 +39,14 @@ const ManageTasks = () => {
 
   return (
     <div className={`manage-task-wrapper ${theme}`}>
-      <div className={`manage-task-container ${theme}`}>
-        {/* ✅ Back to Dashboard button */}
-        <div className="back-button-wrapper">
-          <Link to="/Dashboard" className="back-button">
-            ⬅ Back to Dashboard
-          </Link>
-        </div>
+      {/* ✅ Moved OUTSIDE the container */}
+      <div className="back-button-wrapper">
+        <Link to="/Dashboard" className="back-button">
+          ⬅ Back to Dashboard
+        </Link>
+      </div>
 
+      <div className={`manage-task-container ${theme}`}>
         <h2>🗂️ Manage Tasks</h2>
 
         {tasks.length === 0 ? (

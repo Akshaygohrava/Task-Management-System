@@ -1,28 +1,30 @@
-/* Wrapper */
+/* === Wrapper === */
 .manage-task-wrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Allow back button above container */
+  align-items: center;
   padding: 3rem 1rem;
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Container */
-.manage-task-container {
+/* === Back Button === */
+/* 
+.back-button-wrapper {
   width: 100%;
   max-width: 900px;
-  border-radius: 16px;
-  padding: 2rem;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+} */
+
+.back-button-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 2rem;   /* ⬅️ increased from 1rem to 2rem */
+  margin-top: -7rem;
+  align-self: flex-start; /* ⬅️ aligns to the left */
+  padding-left: 0.5rem;   /* ⬅️ slight left indent */
 }
 
-/* Back Button */
-.back-button-wrapper {
-  margin-bottom: 1rem;
-}
 
 .back-button {
   display: inline-block;
@@ -41,7 +43,21 @@
   transform: translateY(-2px);
 }
 
-/* Tasks List */
+/* === Container === */
+.manage-task-container {
+  width: 100%;
+  max-width: 1200px;   /* ⬅️ updated to match ProgressTracker */
+  border-radius: 12px; /* ⬅️ consistent rounded corners */
+  padding: 2rem;
+  margin-top: 2rem;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+
+/* === Task List === */
 .task-list {
   display: flex;
   flex-direction: column;
@@ -146,7 +162,7 @@
   margin-top: 2rem;
 }
 
-/* Inline Edit Form */
+/* === Inline Edit Form === */
 .edit-form {
   margin-top: 1rem;
   display: flex;
@@ -178,6 +194,7 @@
 .edit-actions {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .save-btn {
@@ -198,7 +215,7 @@
   background: #5a6268;
 }
 
-/* Light Theme */
+/* === Light Theme === */
 .manage-task-wrapper.light {
   background: #f0f4f8;
 }
@@ -216,7 +233,7 @@
   color: #333;
 }
 
-/* Dark Theme */
+/* === Dark Theme === */
 .manage-task-wrapper.dark {
   background: linear-gradient(135deg, #0d0d2b, #1a1a3b);
 }
@@ -240,10 +257,14 @@
   color: #aaa;
 }
 
-/* Responsive */
+/* === Responsive === */
 @media (max-width: 768px) {
   .edit-actions {
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .back-button-wrapper {
+    max-width: 100%;
   }
 }
