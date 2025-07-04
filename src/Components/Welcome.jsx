@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "./Welcome.css";
+import "./welcome.css";
 import { useTheme } from "../context/ThemeContext";
 
 const features = [
