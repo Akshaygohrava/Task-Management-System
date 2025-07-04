@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import Login from "./Components/Auth/Login";
-import Signup from "./Components/Auth/SignUp";
+import Signup from "./Components/Auth/Signup"; // <-- fixed
 import Welcome from "./Components/Welcome";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import AddTask from "./Components/TaskMng/AddTask";
