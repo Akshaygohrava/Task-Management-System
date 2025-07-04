@@ -138,3 +138,38 @@
   background-color: #1e2b51;
   color: #ffffff;
 }
+.add-task-wrapper {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 3rem 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.back-button-wrapper {
+  width: 100%;
+  max-width: 420px; /* Same as container width */
+  /* margin-bottom: 1rem; */
+  align-self: flex-start;
+  padding-left: 1rem;
+}
+
+.back-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #696FF6, #9D7BF6);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #555BF6, #7D5BF6);
+  transform: translateY(-2px);
+}

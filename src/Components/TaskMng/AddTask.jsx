@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./AddTask.css";
+import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 
 const AddTask = () => {
@@ -49,9 +50,17 @@ const AddTask = () => {
 
   return (
     <div className={`add-task-wrapper ${darkMode ? "dark" : "light"}`}>
+    
+      <div className="back-button-wrapper">
+        <Link to="/Dashboard" className="back-button">
+          ⬅ Back to Dashboard
+        </Link>
+      </div>
+
       <div className={`add-task-container ${darkMode ? "dark" : "light"}`}>
         <h2>Add New Task</h2>
         <form onSubmit={handleSubmit}>
+          {/* Form fields... */}
           <div className="form-group">
             <label>Title *</label>
             <input
