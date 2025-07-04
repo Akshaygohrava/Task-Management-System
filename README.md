@@ -4,6 +4,14 @@ Welcome to **PLANNINGS**, a beautiful and intuitive Task Management System built
 
 ---
 
+## 🌐 Live Demo
+
+Experience PLANNINGS live:  
+**[View Live App](https://your-live-app-link.com/)**  
+> *Replace the above URL with your actual deployed app link (e.g., Vercel, Netlify, Render, or your custom domain).*
+
+---
+
 ## ✨ Features
 
 ### 🚪 User Authentication
@@ -34,7 +42,31 @@ Welcome to **PLANNINGS**, a beautiful and intuitive Task Management System built
 
 ## 📸 Screenshots
 
-> Add screenshots here for Welcome Page, Dashboard, Task List, and Progress Tracker.
+<p align="center">
+  <img src="screenshots/welcome.png" width="600" alt="Welcome Page" />
+  <br/>
+  <em>Welcome Page</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/dashboard.png" width="600" alt="Dashboard" />
+  <br/>
+  <em>Dashboard Overview</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/tasklist.png" width="600" alt="Task List" />
+  <br/>
+  <em>Task List</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/progress.png" width="600" alt="Progress Tracker" />
+  <br/>
+  <em>Progress Tracker & Charts</em>
+</p>
+
+> Screenshots not showing? Make sure you have the images in a `screenshots/` folder at the root of the repository, or update the paths accordingly.
 
 ---
 
@@ -73,6 +105,8 @@ Welcome to **PLANNINGS**, a beautiful and intuitive Task Management System built
 - **Charts:** Recharts
 - **Styling:** CSS3, Flexbox, Gradients, Animations
 - **Routing:** React Router
+- **State Management:** React Context API
+- **Deployment:** *(add your deployment platform e.g., Vercel, Netlify, Render)*
 
 ---
 
@@ -82,12 +116,19 @@ Welcome to **PLANNINGS**, a beautiful and intuitive Task Management System built
 - **Customizable & flexible:** Categorize and prioritize as you like.
 - **Visual insights:** Interactive charts and streaks to keep you on track.
 - **Modern design:** Clean, beautiful, and responsive interface.
+- **Open source:** Fork, customize, and contribute as you wish.
 
 ---
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for improvements or new features.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/YourFeature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin feature/YourFeature`)
+5. Open a Pull Request
 
 ---
 
