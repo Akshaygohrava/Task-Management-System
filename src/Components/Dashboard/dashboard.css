@@ -1,3 +1,4 @@
+/* DASHBOARD CONTAINER */
 .dashboard-container {
   padding: 3rem;
   min-height: 100vh;
@@ -28,13 +29,13 @@
 }
 
 .dashboard-header h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;   /* Bigger */
   font-weight: bold;
   color: #696ff6;
 }
 
 .dashboard-header p {
-  font-size: 1rem;
+  font-size: 1.1rem;   /* Bigger */
   color: #dcdde7;
 }
 
@@ -45,24 +46,26 @@
 .dashboard-cards {
   display: flex;
   justify-content: center;
-  gap: 4rem;
+  gap: 3rem;
   flex-wrap: wrap;
-  padding-top: 4rem;
+  padding-top: 3rem;
 }
 
+/* DASHBOARD CARD STYLES */
 .dashboard-card {
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 16px;                 /* More rounded */
+  padding: 2.5rem 2rem;                /* Bigger padding */
   text-align: center;
-  width: 280px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 8px 24px rgba(105, 111, 246, 0.15);
+  width: 320px;                        /* Wider card */
+  min-height: 280px;                   /* Taller card */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 12px 36px rgba(105, 111, 246, 0.2);
   cursor: pointer;
 
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.319);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   color: #fff;
 }
 
@@ -73,20 +76,24 @@
 }
 
 .dashboard-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(105, 111, 246, 0.35);
+  transform: translateY(-8px) scale(1.02);  /* Smooth hover pop */
+  box-shadow: 0 16px 40px rgba(105, 111, 246, 0.4);
 }
 
 .card-icon {
-  font-size: 2.5rem;
+  font-size: 3rem;   /* Bigger icon */
   color: #d5de2d;
   margin-bottom: 1rem;
 }
 
+.dashboard-container.light .card-icon {
+  color: #050904;
+}
+
 .dashboard-card h2 {
-  font-size: 1.2rem;
+  font-size: 1.5rem;   /* Bigger heading */
   color: #ffffff;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .dashboard-container.light .dashboard-card h2 {
@@ -98,9 +105,10 @@
 }
 
 .dashboard-card p {
-  font-size: 0.95rem;
+  font-size: 1.05rem;   /* Bigger description */
   color: #a392b4;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
 }
 
 .dashboard-container.light .dashboard-card p {
@@ -110,12 +118,10 @@
 .dashboard-card small {
   display: block;
   margin-top: 1rem;
-  font-size: 0.85rem;
+  font-size: 0.95rem;   /* Bigger */
   color: #4bff09;
 }
-.dashboard-container.light .card-icon {
-  color: #050904;
-}
+
 .dashboard-container.light .dashboard-card small {
   color: #07ff77;
 }

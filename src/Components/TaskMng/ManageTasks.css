@@ -1,7 +1,7 @@
 /* === Wrapper === */
 .manage-task-wrapper {
   display: flex;
-  flex-direction: column; /* Allow back button above container */
+  flex-direction: column; 
   align-items: center;
   padding: 3rem 1rem;
   min-height: 100vh;
@@ -19,7 +19,7 @@
 .back-button-wrapper {
   width: 100%;
   max-width: 900px;
-  margin-bottom: 2rem;   /* ⬅️ increased from 1rem to 2rem */
+  margin-bottom: 2rem;  
   margin-top: -7rem;
   align-self: flex-start; /* ⬅️ aligns to the left */
   padding-left: 0.5rem;   /* ⬅️ slight left indent */
@@ -46,8 +46,8 @@
 /* === Container === */
 .manage-task-container {
   width: 100%;
-  max-width: 1200px;   /* ⬅️ updated to match ProgressTracker */
-  border-radius: 12px; /* ⬅️ consistent rounded corners */
+  max-width: 1200px; 
+  border-radius: 12px; 
   padding: 2rem;
   margin-top: 2rem;
   backdrop-filter: blur(12px);
@@ -266,5 +266,49 @@
 
   .back-button-wrapper {
     max-width: 100%;
+  }
+}
+/* === Filter Section === */
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: .5rem;
+  margin-top: 1rem;
+}
+
+.filter-section input,
+.filter-section select {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 150px;
+  transition: border-color 0.2s;
+}
+
+.filter-section input:focus,
+.filter-section select:focus {
+  outline: none;
+  border-color: #696FF6;
+}
+
+.manage-task-container.light .filter-section input,
+.manage-task-container.light .filter-section select {
+  background: #fff;
+  color: #000;
+}
+
+.manage-task-container.dark .filter-section input,
+.manage-task-container.dark .filter-section select {
+  background: #1a1a3b;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+@media (max-width: 768px) {
+  .filter-section {
+    flex-direction: column;
   }
 }
