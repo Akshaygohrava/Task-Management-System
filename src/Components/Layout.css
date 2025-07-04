@@ -1,0 +1,20 @@
+.theme-toggle-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  /* background-color: rgba(255, 255, 255, 0.15); */
+  color: #fff;
+  cursor: pointer;
+  /* z-index: 1000;
+  backdrop-filter: blur(4px);
+  transition: background-color 0.3s ease; */
+}
+
+.light-mode .theme-toggle-btn {
+  background-color: #e0d6ff;
+  color: #14141a;
+}

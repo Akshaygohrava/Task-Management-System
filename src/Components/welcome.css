@@ -1,0 +1,119 @@
+.welcome-page {
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 2rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.welcome-container {
+  text-align: center;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.brand {
+  background: linear-gradient(135deg, #9a05cc, #b500c6, #2c60eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.features-heading {
+  margin: 2rem 0 1rem;
+}
+
+.get-started-btn {
+  margin-top: 2rem;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #8f35ea, #5c4aea, #2c60eb);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.get-started-btn:hover {
+  transform: scale(1.05);
+}
+
+.feature-cards-wrapper {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  margin: 2rem 0;
+  scroll-behavior: smooth;
+  padding: 0.5rem 1rem;
+  scroll-padding: 1rem;
+}
+.feature-cards-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.feature-card {
+  min-width: 200px;
+  max-width: 200px;
+  padding: 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-top: 0.3rem;
+  color: #b7b8b9;
+  font-weight: 500;
+}
+.feature-card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #7b3eeb;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+
+.dark-mode.theme-toggle-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.dark-mode .feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.light-mode .feature-card {
+  background: rgba(69, 14, 118, 0.57);
+  border: 1px solid #ffffff;
+  color: #222;
+}
+
+.light-mode .feature-card h2 {
+  color: #ffffff;
+}
+.light-mode .feature-card p {
+  color: #4f0856;
+}
+.light-mode .theme-toggle-btn {
+  background-color: #dcd6ff;
+  color: #151414;
+}

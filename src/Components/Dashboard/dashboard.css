@@ -1,0 +1,121 @@
+.dashboard-container {
+  padding: 3rem;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background 0.3s ease;
+}
+
+.dashboard-container.dark {
+  background: linear-gradient(
+    135deg,
+    #101024,
+    #121226,
+    #181e39,
+    #1e2b51,
+    #332757
+  );
+  color: #fff;
+}
+
+.dashboard-container.light {
+  background: #dbdbe7;
+  color: #222;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #696ff6;
+}
+
+.dashboard-header p {
+  font-size: 1rem;
+  color: #dcdde7;
+}
+
+.dashboard-container.light .dashboard-header p {
+  color: #222;
+}
+
+.dashboard-cards {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+  padding-top: 4rem;
+}
+
+.dashboard-card {
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  width: 280px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 24px rgba(105, 111, 246, 0.15);
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.319);
+  color: #fff;
+}
+
+.dashboard-container.light .dashboard-card {
+  background: rgba(69, 14, 118, 0.57);
+  border: 1px solid #ffffff;
+  color: #222;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(105, 111, 246, 0.35);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  color: #d5de2d;
+  margin-bottom: 1rem;
+}
+
+.dashboard-card h2 {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-container.light .dashboard-card h2 {
+  color: #ffffff;
+}
+
+.dashboard-container.light .dashboard-card .card-icon {
+  color: #000000;
+}
+
+.dashboard-card p {
+  font-size: 0.95rem;
+  color: #a392b4;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-container.light .dashboard-card p {
+  color: #0a090a;
+}
+
+.dashboard-card small {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #4bff09;
+}
+.dashboard-container.light .card-icon {
+  color: #050904;
+}
+.dashboard-container.light .dashboard-card small {
+  color: #07ff77;
+}
