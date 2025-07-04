@@ -7,7 +7,7 @@ Welcome to **PLANNINGS**, a beautiful and intuitive Task Management System built
 ## 🌐 Live Demo
 
 Experience PLANNINGS live:  
-**[View Live App](https://your-live-app-link.com/)**  
+**[View Live App]([https://your-live-app-link.com/](https://task-management-system-zeta-weld.vercel.app/))**  
 > *Replace the above URL with your actual deployed app link (e.g., Vercel, Netlify, Render, or your custom domain).*
 
 ---
