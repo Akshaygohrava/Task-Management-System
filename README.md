@@ -7,8 +7,8 @@ Welcome to **PLANNINGS**, a beautiful and intuitive Task Management System built
 ## 🌐 Live Demo
 
 Experience PLANNINGS live:  
-**[View Live App](https://your-live-app-link.com/](https://task-management-system-zeta-weld.vercel.app/)**  
-> *Replace the above URL with your actual deployed app link (e.g., Vercel, Netlify, Render, or your custom domain).*
+**[View Live App](https://task-management-system-zeta-weld.vercel.app/)**  
+> *This is the actual deployed app link on Vercel.*
 
 ---
 
@@ -106,7 +106,7 @@ Experience PLANNINGS live:
 - **Styling:** CSS3, Flexbox, Gradients, Animations
 - **Routing:** React Router
 - **State Management:** React Context API
-- **Deployment:** *(add your deployment platform e.g., Vercel, Netlify, Render)*
+- **Deployment:** Vercel
 
 ---
 
