@@ -52,9 +52,13 @@ const ManageTasks = () => {
     return matchSearch && matchCategory && matchPriority;
   });
 
+  // NEW: Split filtered tasks into pending & completed
+  const pendingTasks = filteredTasks.filter(task => !task.completed);
+  const completedTasks = filteredTasks.filter(task => task.completed);
+
   return (
     <div className={`manage-task-wrapper ${theme}`}>
-      <div className={`back-button-wrapper`}>
+      <div className="back-button-wrapper">
         <Link to="/Dashboard" className="back-button">
           ⬅ Back to Dashboard
         </Link>
@@ -94,115 +98,187 @@ const ManageTasks = () => {
         {filteredTasks.length === 0 ? (
           <p className={`empty-msg ${theme}`}>No tasks found.</p>
         ) : (
-          <div className="task-list">
-            {filteredTasks.map((t, i) => (
-              <div
-                key={i}
-                className={`task-card ${theme} ${t.completed ? "completed" : ""}`}
-              >
-                <div className="task-header">
-                  <h3>{t.taskName}</h3>
-                  <span className={`status-badge ${t.completed ? "completed" : "pending"}`}>
-                    {t.completed ? "Completed" : "Pending"}
-                  </span>
+          <div className="multi-task-lists">
+
+            {/* ✅ Pending Tasks */}
+            <div className="task-section">
+              <h3>🕒 Pending Tasks</h3>
+              {pendingTasks.length === 0 ? (
+                <p className="empty-msg">No pending tasks.</p>
+              ) : (
+                <div className="task-list">
+                  {pendingTasks.map((t, i) => {
+                    const actualIndex = tasks.findIndex(task => task === t);
+                    return (
+                      <TaskCard
+                        key={actualIndex}
+                        task={t}
+                        idx={actualIndex}
+                        tasks={tasks}
+                        update={update}
+                        editIndex={editIndex}
+                        editTask={editTask}
+                        handleEdit={handleEdit}
+                        handleSave={handleSave}
+                        handleCancel={handleCancel}
+                        setEditTask={setEditTask}
+                        theme={theme}
+                      />
+                    );
+                  })}
                 </div>
+              )}
+            </div>
 
-                <div className="task-info">
-                  <p>{t.description}</p>
-                  <small>
-                    📂 {t.category} | ⚡ {t.priority} | 📅 {t.date}
-                  </small>
+            {/* ✅ Completed Tasks */}
+            <div className="task-section">
+              <h3>✅ Completed Tasks</h3>
+              {completedTasks.length === 0 ? (
+                <p className="empty-msg">No completed tasks.</p>
+              ) : (
+                <div className="task-list">
+                  {completedTasks.map((t, i) => {
+                    const actualIndex = tasks.findIndex(task => task === t);
+                    return (
+                      <TaskCard
+                        key={actualIndex}
+                        task={t}
+                        idx={actualIndex}
+                        tasks={tasks}
+                        update={update}
+                        editIndex={editIndex}
+                        editTask={editTask}
+                        handleEdit={handleEdit}
+                        handleSave={handleSave}
+                        handleCancel={handleCancel}
+                        setEditTask={setEditTask}
+                        theme={theme}
+                      />
+                    );
+                  })}
                 </div>
+              )}
+            </div>
 
-                <div className="task-actions">
-                  <button
-                    className="complete-btn"
-                    onClick={() =>
-                      update(
-                        tasks.map((task, idx) =>
-                          idx === i
-                            ? { ...task, completed: !task.completed }
-                            : task
-                        )
-                      )
-                    }
-                  >
-                    {t.completed ? "↩️ Undo" : "✅ Complete"}
-                  </button>
-
-                  <button
-                    className="edit-btn"
-                    onClick={() => handleEdit(i)}
-                  >
-                    ✏️ Edit
-                  </button>
-
-                  <button
-                    className="delete-btn"
-                    onClick={() => update(tasks.filter((_, idx) => idx !== i))}
-                  >
-                    🗑️ Delete
-                  </button>
-                </div>
-
-                {editIndex === i && (
-                  <div className="edit-form">
-                    <input
-                      type="text"
-                      placeholder="Task Name"
-                      value={editTask.taskName}
-                      onChange={(e) =>
-                        setEditTask({ ...editTask, taskName: e.target.value })
-                      }
-                    />
-                    <textarea
-                      placeholder="Description"
-                      value={editTask.description}
-                      onChange={(e) =>
-                        setEditTask({ ...editTask, description: e.target.value })
-                      }
-                    ></textarea>
-                    <input
-                      type="text"
-                      placeholder="Category"
-                      value={editTask.category}
-                      onChange={(e) =>
-                        setEditTask({ ...editTask, category: e.target.value })
-                      }
-                    />
-                    <input
-                      type="text"
-                      placeholder="Priority"
-                      value={editTask.priority}
-                      onChange={(e) =>
-                        setEditTask({ ...editTask, priority: e.target.value })
-                      }
-                    />
-                    <input
-                      type="date"
-                      value={editTask.date}
-                      onChange={(e) =>
-                        setEditTask({ ...editTask, date: e.target.value })
-                      }
-                    />
-
-                    <div className="edit-actions">
-                      <button className="save-btn" onClick={handleSave}>
-                        💾 Save
-                      </button>
-                      <button className="cancel-btn" onClick={handleCancel}>
-                        ❌ Cancel
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
           </div>
         )}
       </div>
     </div>
   );
 };
+
+// ✅ Extracted TaskCard for reuse
+const TaskCard = ({
+  task,
+  idx,
+  tasks,
+  update,
+  editIndex,
+  editTask,
+  handleEdit,
+  handleSave,
+  handleCancel,
+  setEditTask,
+  theme
+}) => (
+  <div
+    className={`task-card ${theme} ${task.completed ? "completed" : ""}`}
+  >
+    <div className="task-header">
+      <h3>{task.taskName}</h3>
+      <span className={`status-badge ${task.completed ? "completed" : "pending"}`}>
+        {task.completed ? "Completed" : "Pending"}
+      </span>
+    </div>
+
+    <div className="task-info">
+      <p>{task.description}</p>
+      <small>
+        📂 {task.category} | ⚡ {task.priority} | 📅 {task.date}
+      </small>
+    </div>
+
+    <div className="task-actions">
+      <button
+        className="complete-btn"
+        onClick={() =>
+          update(
+            tasks.map((t, i) =>
+              i === idx ? { ...t, completed: !t.completed } : t
+            )
+          )
+        }
+      >
+        {task.completed ? "↩️ Undo" : "✅ Complete"}
+      </button>
+
+      <button
+        className="edit-btn"
+        onClick={() => handleEdit(idx)}
+      >
+        ✏️ Edit
+      </button>
+
+      <button
+        className="delete-btn"
+        onClick={() => update(tasks.filter((_, i) => i !== idx))}
+      >
+        🗑️ Delete
+      </button>
+    </div>
+
+    {editIndex === idx && (
+      <div className="edit-form">
+        <input
+          type="text"
+          placeholder="Task Name"
+          value={editTask.taskName}
+          onChange={(e) =>
+            setEditTask({ ...editTask, taskName: e.target.value })
+          }
+        />
+        <textarea
+          placeholder="Description"
+          value={editTask.description}
+          onChange={(e) =>
+            setEditTask({ ...editTask, description: e.target.value })
+          }
+        ></textarea>
+        <input
+          type="text"
+          placeholder="Category"
+          value={editTask.category}
+          onChange={(e) =>
+            setEditTask({ ...editTask, category: e.target.value })
+          }
+        />
+        <input
+          type="text"
+          placeholder="Priority"
+          value={editTask.priority}
+          onChange={(e) =>
+            setEditTask({ ...editTask, priority: e.target.value })
+          }
+        />
+        <input
+          type="date"
+          value={editTask.date}
+          onChange={(e) =>
+            setEditTask({ ...editTask, date: e.target.value })
+          }
+        />
+
+        <div className="edit-actions">
+          <button className="save-btn" onClick={handleSave}>
+            💾 Save
+          </button>
+          <button className="cancel-btn" onClick={handleCancel}>
+            ❌ Cancel
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+);
 
 export default ManageTasks;
