@@ -52,10 +52,6 @@ const ManageTasks = () => {
     return matchSearch && matchCategory && matchPriority;
   });
 
-  // NEW: Split filtered tasks into pending & completed
-  const pendingTasks = filteredTasks.filter(task => !task.completed);
-  const completedTasks = filteredTasks.filter(task => task.completed);
-
   return (
     <div className={`manage-task-wrapper ${theme}`}>
       <div className="back-button-wrapper">
@@ -98,68 +94,23 @@ const ManageTasks = () => {
         {filteredTasks.length === 0 ? (
           <p className={`empty-msg ${theme}`}>No tasks found.</p>
         ) : (
-          <div className="multi-task-lists">
-
-            {/* ✅ Pending Tasks */}
-            <div className="task-section">
-              <h3>🕒 Pending Tasks</h3>
-              {pendingTasks.length === 0 ? (
-                <p className="empty-msg">No pending tasks.</p>
-              ) : (
-                <div className="task-list">
-                  {pendingTasks.map((t, i) => {
-                    const actualIndex = tasks.findIndex(task => task === t);
-                    return (
-                      <TaskCard
-                        key={actualIndex}
-                        task={t}
-                        idx={actualIndex}
-                        tasks={tasks}
-                        update={update}
-                        editIndex={editIndex}
-                        editTask={editTask}
-                        handleEdit={handleEdit}
-                        handleSave={handleSave}
-                        handleCancel={handleCancel}
-                        setEditTask={setEditTask}
-                        theme={theme}
-                      />
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* ✅ Completed Tasks */}
-            <div className="task-section">
-              <h3>✅ Completed Tasks</h3>
-              {completedTasks.length === 0 ? (
-                <p className="empty-msg">No completed tasks.</p>
-              ) : (
-                <div className="task-list">
-                  {completedTasks.map((t, i) => {
-                    const actualIndex = tasks.findIndex(task => task === t);
-                    return (
-                      <TaskCard
-                        key={actualIndex}
-                        task={t}
-                        idx={actualIndex}
-                        tasks={tasks}
-                        update={update}
-                        editIndex={editIndex}
-                        editTask={editTask}
-                        handleEdit={handleEdit}
-                        handleSave={handleSave}
-                        handleCancel={handleCancel}
-                        setEditTask={setEditTask}
-                        theme={theme}
-                      />
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
+          <div className="task-list">
+            {filteredTasks.map((t, i) => (
+              <TaskCard
+                key={i}
+                task={t}
+                idx={i}
+                tasks={tasks}
+                update={update}
+                editIndex={editIndex}
+                editTask={editTask}
+                handleEdit={handleEdit}
+                handleSave={handleSave}
+                handleCancel={handleCancel}
+                setEditTask={setEditTask}
+                theme={theme}
+              />
+            ))}
           </div>
         )}
       </div>
@@ -167,7 +118,7 @@ const ManageTasks = () => {
   );
 };
 
-// ✅ Extracted TaskCard for reuse
+// ✅ Extracted TaskCard
 const TaskCard = ({
   task,
   idx,
@@ -181,9 +132,7 @@ const TaskCard = ({
   setEditTask,
   theme
 }) => (
-  <div
-    className={`task-card ${theme} ${task.completed ? "completed" : ""}`}
-  >
+  <div className={`task-card ${theme} ${task.completed ? "completed" : ""}`}>
     <div className="task-header">
       <h3>{task.taskName}</h3>
       <span className={`status-badge ${task.completed ? "completed" : "pending"}`}>
