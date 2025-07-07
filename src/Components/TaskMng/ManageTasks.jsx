@@ -62,6 +62,12 @@ const ManageTasks = () => {
 
       <div className={`manage-task-container ${theme}`}>
         <h2>🗂️ Manage Tasks</h2>
+        <h3><p style={
+          {
+            color:"blue",
+
+          }
+        }>View, edit, and organize your tasks</p></h3>
 
         {/* ✅ Filters */}
         <div className="filter-section">
