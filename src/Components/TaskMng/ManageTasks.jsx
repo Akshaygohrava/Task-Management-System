@@ -9,13 +9,17 @@ const ManageTasks = () => {
   const [editTask, setEditTask] = useState({});
   const { theme } = useTheme();
 
-  // Filters
   const [searchText, setSearchText] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("");
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("tasks")) || [];
+    let stored = JSON.parse(localStorage.getItem("tasks")) || [];
+    // ✅ Ensure every task has status
+    stored = stored.map(task => ({
+      ...task,
+      status: task.status || "To Do"
+    }));
     setTasks(stored);
   }, []);
 
@@ -31,7 +35,7 @@ const ManageTasks = () => {
 
   const handleSave = () => {
     const updated = tasks.map((t, i) =>
-      i === editIndex ? editTask : t
+      i === editIndex ? { ...editTask, status: editTask.status || "To Do" } : t
     );
     update(updated);
     setEditIndex(null);
@@ -42,15 +46,20 @@ const ManageTasks = () => {
     setEditTask({});
   };
 
-  // Filter logic
-  const filteredTasks = tasks.filter((task) => {
+  // ✅ Filters
+  const filteredTasks = tasks.filter(task => {
     const matchSearch =
-      task.taskName.toLowerCase().includes(searchText.toLowerCase()) ||
-      task.description.toLowerCase().includes(searchText.toLowerCase());
+      (task.taskName || "").toLowerCase().includes(searchText.toLowerCase()) ||
+      (task.description || "").toLowerCase().includes(searchText.toLowerCase());
     const matchCategory = categoryFilter ? task.category === categoryFilter : true;
     const matchPriority = priorityFilter ? task.priority === priorityFilter : true;
     return matchSearch && matchCategory && matchPriority;
   });
+
+  // ✅ Kanban Columns
+  const todoTasks = filteredTasks.filter(task => task.status === "To Do");
+  const inProgressTasks = filteredTasks.filter(task => task.status === "In Progress");
+  const completedTasks = filteredTasks.filter(task => task.status === "Completed");
 
   return (
     <div className={`manage-task-wrapper ${theme}`}>
@@ -61,15 +70,8 @@ const ManageTasks = () => {
       </div>
 
       <div className={`manage-task-container ${theme}`}>
-        <h2>🗂️ Manage Tasks</h2>
-        <h3><p style={
-          {
-            color:"blue",
+        <h2>🗂️ Manage Tasks (Kanban Board)</h2>
 
-          }
-        }>View, edit, and organize your tasks</p></h3>
-
-        {/* ✅ Filters */}
         <div className="filter-section">
           <input
             type="text"
@@ -100,31 +102,52 @@ const ManageTasks = () => {
         {filteredTasks.length === 0 ? (
           <p className={`empty-msg ${theme}`}>No tasks found.</p>
         ) : (
-          <div className="task-list">
-            {filteredTasks.map((t, i) => (
-              <TaskCard
-                key={i}
-                task={t}
-                idx={i}
-                tasks={tasks}
-                update={update}
-                editIndex={editIndex}
-                editTask={editTask}
-                handleEdit={handleEdit}
-                handleSave={handleSave}
-                handleCancel={handleCancel}
-                setEditTask={setEditTask}
-                theme={theme}
-              />
-            ))}
+          <div className="kanban-board">
+            <KanbanColumn title="📝 To Do" tasks={todoTasks} allTasks={tasks} update={update} {...taskCardProps()} />
+            <KanbanColumn title="🚧 In Progress" tasks={inProgressTasks} allTasks={tasks} update={update} {...taskCardProps()} />
+            <KanbanColumn title="✅ Completed" tasks={completedTasks} allTasks={tasks} update={update} {...taskCardProps()} />
           </div>
         )}
       </div>
     </div>
   );
+
+  function taskCardProps() {
+    return {
+      editIndex,
+      editTask,
+      handleEdit,
+      handleSave,
+      handleCancel,
+      setEditTask,
+      theme
+    };
+  }
 };
 
-// ✅ Extracted TaskCard
+const KanbanColumn = ({ title, tasks, allTasks, update, ...props }) => (
+  <div className="kanban-column">
+    <h3>{title}</h3>
+    {tasks.length === 0 ? (
+      <p className="empty-msg">No tasks</p>
+    ) : (
+      tasks.map((t) => {
+        const actualIndex = allTasks.findIndex(task => task === t);
+        return (
+          <TaskCard
+            key={actualIndex}
+            task={t}
+            idx={actualIndex}
+            tasks={allTasks}
+            update={update}
+            {...props}
+          />
+        );
+      })
+    )}
+  </div>
+);
+
 const TaskCard = ({
   task,
   idx,
@@ -138,11 +161,11 @@ const TaskCard = ({
   setEditTask,
   theme
 }) => (
-  <div className={`task-card ${theme} ${task.completed ? "completed" : ""}`}>
+  <div className={`task-card ${theme} ${task.status === "Completed" ? "completed" : ""}`}>
     <div className="task-header">
-      <h3>{task.taskName}</h3>
-      <span className={`status-badge ${task.completed ? "completed" : "pending"}`}>
-        {task.completed ? "Completed" : "Pending"}
+      <h4>{task.taskName}</h4>
+      <span className={`status-badge ${task.status.toLowerCase().replace(" ", "-")}`}>
+        {task.status}
       </span>
     </div>
 
@@ -154,30 +177,24 @@ const TaskCard = ({
     </div>
 
     <div className="task-actions">
-      <button
-        className="complete-btn"
-        onClick={() =>
-          update(
-            tasks.map((t, i) =>
-              i === idx ? { ...t, completed: !t.completed } : t
+      {task.status !== "Completed" && (
+        <button
+          className="complete-btn"
+          onClick={() =>
+            update(
+              tasks.map((t, i) =>
+                i === idx ? { ...t, status: "Completed" } : t
+              )
             )
-          )
-        }
-      >
-        {task.completed ? "↩️ Undo" : "✅ Complete"}
-      </button>
-
-      <button
-        className="edit-btn"
-        onClick={() => handleEdit(idx)}
-      >
+          }
+        >
+          ✅ Mark Complete
+        </button>
+      )}
+      <button className="edit-btn" onClick={() => handleEdit(idx)}>
         ✏️ Edit
       </button>
-
-      <button
-        className="delete-btn"
-        onClick={() => update(tasks.filter((_, i) => i !== idx))}
-      >
+      <button className="delete-btn" onClick={() => update(tasks.filter((_, i) => i !== idx))}>
         🗑️ Delete
       </button>
     </div>
@@ -186,50 +203,36 @@ const TaskCard = ({
       <div className="edit-form">
         <input
           type="text"
-          placeholder="Task Name"
           value={editTask.taskName}
-          onChange={(e) =>
-            setEditTask({ ...editTask, taskName: e.target.value })
-          }
+          onChange={(e) => setEditTask({ ...editTask, taskName: e.target.value })}
+          placeholder="Task Name"
         />
         <textarea
-          placeholder="Description"
           value={editTask.description}
-          onChange={(e) =>
-            setEditTask({ ...editTask, description: e.target.value })
-          }
+          onChange={(e) => setEditTask({ ...editTask, description: e.target.value })}
+          placeholder="Description"
         ></textarea>
         <input
           type="text"
-          placeholder="Category"
           value={editTask.category}
-          onChange={(e) =>
-            setEditTask({ ...editTask, category: e.target.value })
-          }
+          onChange={(e) => setEditTask({ ...editTask, category: e.target.value })}
+          placeholder="Category"
         />
         <input
           type="text"
-          placeholder="Priority"
           value={editTask.priority}
-          onChange={(e) =>
-            setEditTask({ ...editTask, priority: e.target.value })
-          }
+          onChange={(e) => setEditTask({ ...editTask, priority: e.target.value })}
+          placeholder="Priority"
         />
         <input
           type="date"
           value={editTask.date}
-          onChange={(e) =>
-            setEditTask({ ...editTask, date: e.target.value })
-          }
+          onChange={(e) => setEditTask({ ...editTask, date: e.target.value })}
         />
 
         <div className="edit-actions">
-          <button className="save-btn" onClick={handleSave}>
-            💾 Save
-          </button>
-          <button className="cancel-btn" onClick={handleCancel}>
-            ❌ Cancel
-          </button>
+          <button className="save-btn" onClick={handleSave}>💾 Save</button>
+          <button className="cancel-btn" onClick={handleCancel}>❌ Cancel</button>
         </div>
       </div>
     )}

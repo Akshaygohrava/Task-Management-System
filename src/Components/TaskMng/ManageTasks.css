@@ -307,3 +307,40 @@
     flex-direction: column;
   }
 }
+
+
+/* === Kanban Layout === */
+.kanban-board {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+.kanban-column {
+  flex: 1;
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.kanban-column h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.kanban-column .task-card {
+  margin-bottom: 1.5rem; /* Adds spacing between tasks */
+}
+
+
+
+@media (max-width: 900px) {
+  .kanban-board {
+    flex-direction: column;
+  }
+  .kanban-column {
+    margin-bottom: 2rem;
+  }
+}
