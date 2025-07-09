@@ -13,7 +13,7 @@ import {
   LineChart,
   Line,
 } from "recharts";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import "./ProgressTracker.css";
 import { useTheme } from "../../context/ThemeContext";
 
@@ -30,7 +30,8 @@ const ProgressTracker = () => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
     setTasks(storedTasks);
 
-    const completed = storedTasks.filter((t) => t.completed).length;
+    // ✅ Use status === "Completed" instead of completed flag
+    const completed = storedTasks.filter((t) => t.status === "Completed").length;
     const pending = storedTasks.length - completed;
 
     setChartData([
@@ -42,7 +43,7 @@ const ProgressTracker = () => {
       const cat = t.category || "Uncategorized";
       acc[cat] = acc[cat] || { total: 0, completed: 0 };
       acc[cat].total++;
-      if (t.completed) acc[cat].completed++;
+      if (t.status === "Completed") acc[cat].completed++;
       return acc;
     }, {});
 
@@ -58,7 +59,7 @@ const ProgressTracker = () => {
 
     setCategoryStats(stats);
 
-    // Weekly trend data (mock example)
+    // Example weekly trend
     const trend = [
       { day: "Mon", completed: 2 },
       { day: "Tue", completed: 3 },
@@ -73,7 +74,8 @@ const ProgressTracker = () => {
 
   const overallPercent = tasks.length
     ? Math.round(
-        (tasks.filter((t) => t.completed).length / tasks.length) * 100
+        (tasks.filter((t) => t.status === "Completed").length / tasks.length) *
+          100
       )
     : 0;
 
@@ -90,7 +92,6 @@ const ProgressTracker = () => {
   return (
     <div className={`progress-wrapper ${darkMode ? "dark" : "light"}`}>
       <div className={`progress-container ${darkMode ? "dark" : "light"}`}>
-        {/* ✅ Back Button */}
         <div className="back-button-wrapper">
           <Link to="/Dashboard" className="back-button">
             ⬅ Back to Dashboard
@@ -102,7 +103,9 @@ const ProgressTracker = () => {
         <div className="summary-cards">
           <div className="summary-card">
             <h3>Total Completed</h3>
-            <p className="value">{tasks.filter((t) => t.completed).length}</p>
+            <p className="value">
+              {tasks.filter((t) => t.status === "Completed").length}
+            </p>
             <span className="note">{tasks.length} total tasks</span>
           </div>
           <div className="summary-card">
