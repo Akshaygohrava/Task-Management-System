@@ -262,3 +262,27 @@
     max-width: 100%;
   }
 }
+
+.status-badge {
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff; /* ✅ white text for contrast */
+}
+
+.badge-todo {
+  background: #007bff;
+}
+
+.badge-inprogress {
+  background: #ffc107;
+  color: #333; /* darker text for yellow */
+}
+
+.badge-completed {
+  background: #28a745;
+}
+
+/* ✅ Other styles remain the same */

@@ -5,13 +5,11 @@ import { Link } from "react-router-dom";
 const ManageTasks = () => {
   const [tasks, setTasks] = useState([]);
 
-  // Load tasks from localStorage on mount
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("tasks")) || [];
     setTasks(saved);
   }, []);
 
-  // Update task status and save
   const updateStatus = (idx, newStatus) => {
     const updated = tasks.map((t, i) =>
       i === idx ? { ...t, status: newStatus } : t
@@ -20,7 +18,6 @@ const ManageTasks = () => {
     localStorage.setItem("tasks", JSON.stringify(updated));
   };
 
-  // Delete task
   const deleteTask = (idx) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       const updated = tasks.filter((_, i) => i !== idx);
@@ -29,7 +26,6 @@ const ManageTasks = () => {
     }
   };
 
-  // Update task info after editing
   const saveEditedTask = (idx, editedTask) => {
     const updated = tasks.map((t, i) =>
       i === idx ? { ...t, ...editedTask } : t
@@ -38,7 +34,6 @@ const ManageTasks = () => {
     localStorage.setItem("tasks", JSON.stringify(updated));
   };
 
-  // Kanban Columns
   const todoTasks = tasks.filter((task) => !task.status || task.status === "To Do");
   const inProgressTasks = tasks.filter((task) => task.status === "In Progress");
   const completedTasks = tasks.filter((task) => task.status === "Completed");
@@ -130,6 +125,13 @@ const TaskCard = ({ task, idx, updateStatus, deleteTask, saveEditedTask }) => {
     setIsEditing(false);
   };
 
+  const statusClass =
+    task.status === "Completed"
+      ? "badge-completed"
+      : task.status === "In Progress"
+      ? "badge-inprogress"
+      : "badge-todo";
+
   return (
     <div className="task-card">
       <div className="task-header">
@@ -141,7 +143,9 @@ const TaskCard = ({ task, idx, updateStatus, deleteTask, saveEditedTask }) => {
         ) : (
           <h4>{task.taskName}</h4>
         )}
-        <span className="status-badge">{task.status || "To Do"}</span>
+        <span className={`status-badge ${statusClass}`}>
+          {task.status || "To Do"}
+        </span>
       </div>
 
       <div className="task-info">
