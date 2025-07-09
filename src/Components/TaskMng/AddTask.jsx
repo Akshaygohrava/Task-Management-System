@@ -16,6 +16,9 @@ const AddTask = () => {
   const [categories, setCategories] = useState(["Personal", "Work", "Other"]);
   const [showInput, setShowInput] = useState(false);
 
+  // ✅ Generate today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
   const resetForm = () => {
     setTaskName("");
     setDescription("");
@@ -139,6 +142,7 @@ const AddTask = () => {
             <input
               type="date"
               required
+              min={today}  // ✅ Restrict to today and future dates only!
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />

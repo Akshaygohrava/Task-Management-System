@@ -77,14 +77,19 @@
 }
 .task-card {
   border: 2px solid #007bff;
-  border-left: 6px solid #007bff; /* nice left accent color */
+  border-left: 6px solid #007bff; 
 }
-
-
 .task-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
+
+
+
+
+
+
+
 
 .task-header {
   display: flex;
