@@ -1,46 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ManageTasks.css";
 
 const ManageTasks = () => {
-  const [tasks, setTasks] = useState([
-    {
-      taskName: "First To Do",
-      description: "This is a to-do task",
-      status: "To Do",
-      category: "Work",
-      priority: "High",
-      date: "2025-07-07"
-    },
-    {
-      taskName: "Second In Progress",
-      description: "This is in progress",
-      status: "In Progress",
-      category: "Personal",
-      priority: "Medium",
-      date: "2025-07-08"
-    },
-    {
-      taskName: "Third Completed",
-      description: "This one is done",
-      status: "Completed",
-      category: "Other",
-      priority: "Low",
-      date: "2025-07-09"
-    }
-  ]);
+  const [tasks, setTasks] = useState([]);
 
-  // Kanban Columns
-  const todoTasks = tasks.filter((task) => task.status === "To Do");
-  const inProgressTasks = tasks.filter((task) => task.status === "In Progress");
-  const completedTasks = tasks.filter((task) => task.status === "Completed");
+  // Load tasks from localStorage on mount
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("tasks")) || [];
+    setTasks(saved);
+  }, []);
 
-  // Update Task Status
+  // Update task status and save back to localStorage
   const updateStatus = (idx, newStatus) => {
     const updated = tasks.map((t, i) =>
       i === idx ? { ...t, status: newStatus } : t
     );
     setTasks(updated);
+    localStorage.setItem("tasks", JSON.stringify(updated));
   };
+
+  // Kanban Columns
+  const todoTasks = tasks.filter((task) => !task.status || task.status === "To Do");
+  const inProgressTasks = tasks.filter((task) => task.status === "In Progress");
+  const completedTasks = tasks.filter((task) => task.status === "Completed");
 
   return (
     <div className="manage-task-wrapper">
@@ -70,7 +52,6 @@ const ManageTasks = () => {
   );
 };
 
-// === Kanban Column ===
 const KanbanColumn = ({ title, tasks, allTasks, updateStatus }) => (
   <div className="kanban-column">
     <h3>{title}</h3>
@@ -80,24 +61,18 @@ const KanbanColumn = ({ title, tasks, allTasks, updateStatus }) => (
       tasks.map((t) => {
         const idx = allTasks.findIndex((task) => task === t);
         return (
-          <TaskCard
-            key={idx}
-            task={t}
-            idx={idx}
-            updateStatus={updateStatus}
-          />
+          <TaskCard key={idx} task={t} idx={idx} updateStatus={updateStatus} />
         );
       })
     )}
   </div>
 );
 
-// === Task Card ===
 const TaskCard = ({ task, idx, updateStatus }) => (
   <div className="task-card">
     <div className="task-header">
       <h4>{task.taskName}</h4>
-      <span className="status-badge">{task.status}</span>
+      <span className="status-badge">{task.status || "To Do"}</span>
     </div>
     <div className="task-info">
       <p>{task.description}</p>
@@ -106,7 +81,7 @@ const TaskCard = ({ task, idx, updateStatus }) => (
       </small>
     </div>
     <div className="task-actions">
-      {task.status === "To Do" && (
+      {(!task.status || task.status === "To Do") && (
         <button
           className="inprogress-btn"
           onClick={() => updateStatus(idx, "In Progress")}

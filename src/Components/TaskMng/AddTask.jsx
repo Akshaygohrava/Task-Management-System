@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./AddTask.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 
 const AddTask = () => {
   const { darkMode } = useTheme();
+  const navigate = useNavigate();
 
   const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
@@ -31,12 +32,13 @@ const AddTask = () => {
       priority,
       category,
       date,
-      completed: false,
+      status: "To Do" // ✅ Always needed for Kanban
     };
     const existing = JSON.parse(localStorage.getItem("tasks")) || [];
     localStorage.setItem("tasks", JSON.stringify([...existing, task]));
     alert("Task added successfully!");
     resetForm();
+    navigate("/Dashboard"); // ✅ Go back to Kanban
   };
 
   const addCategory = () => {
@@ -50,7 +52,6 @@ const AddTask = () => {
 
   return (
     <div className={`add-task-wrapper ${darkMode ? "dark" : "light"}`}>
-    
       <div className="back-button-wrapper">
         <Link to="/Dashboard" className="back-button">
           ⬅ Back to Dashboard
@@ -60,7 +61,6 @@ const AddTask = () => {
       <div className={`add-task-container ${darkMode ? "dark" : "light"}`}>
         <h2>Add New Task</h2>
         <form onSubmit={handleSubmit}>
-          {/* Form fields... */}
           <div className="form-group">
             <label>Title *</label>
             <input
@@ -101,6 +101,7 @@ const AddTask = () => {
               {!showInput ? (
                 <select
                   value={category}
+                  required
                   onChange={(e) =>
                     e.target.value === "__add__"
                       ? setShowInput(true)
@@ -134,7 +135,7 @@ const AddTask = () => {
           </div>
 
           <div className="form-group">
-            <label>Due Date</label>
+            <label>Due Date *</label>
             <input
               type="date"
               required
