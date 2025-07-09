@@ -17,28 +17,98 @@ import { Link } from "react-router-dom";
 import "./ProgressTracker.css";
 import { useTheme } from "../../context/ThemeContext";
 
+// Pie colors
 const COLORS = ["#00C49F", "#FF8042"];
+
+// Helper: get YYYY-MM-DD for Date object
+const formatDate = (date) =>
+  date.toISOString().split("T")[0];
+
+// Helper: get week range
+const getStartOfWeek = (date) => {
+  const d = new Date(date);
+  const day = d.getDay(); // Sun=0, Mon=1,...Sat=6
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff);
+  d.setHours(0, 0, 0, 0);
+  return d;
+};
 
 const ProgressTracker = () => {
   const [tasks, setTasks] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [categoryStats, setCategoryStats] = useState([]);
   const [weeklyTrend, setWeeklyTrend] = useState([]);
+  const [streakDays, setStreakDays] = useState(0);
   const { darkMode } = useTheme();
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
     setTasks(storedTasks);
 
-    // ✅ Use status === "Completed" instead of completed flag
+    const today = new Date();
+    const todayStr = formatDate(today);
+
+    // 1️⃣ Calculate streak: get unique completed dates
+    const completedDates = storedTasks
+      .filter((t) => t.status === "Completed" && t.date)
+      .map((t) => t.date);
+
+    const uniqueDates = Array.from(new Set(completedDates)).sort().reverse();
+
+    let streak = 0;
+    let currentDate = new Date(todayStr);
+
+    while (true) {
+      const currentDateStr = formatDate(currentDate);
+      if (uniqueDates.includes(currentDateStr)) {
+        streak += 1;
+        currentDate.setDate(currentDate.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+    setStreakDays(streak);
+
+    // 2️⃣ Calculate weekly goal progress and trend
+    const startOfWeek = getStartOfWeek(today);
+    const trendMap = {
+      Mon: 0,
+      Tue: 0,
+      Wed: 0,
+      Thu: 0,
+      Fri: 0,
+      Sat: 0,
+      Sun: 0,
+    };
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    storedTasks.forEach((t) => {
+      if (t.status === "Completed" && t.date) {
+        const taskDate = new Date(t.date + "T00:00:00");
+        if (taskDate >= startOfWeek && taskDate <= today) {
+          const dayName = days[taskDate.getDay()];
+          trendMap[dayName] = (trendMap[dayName] || 0) + 1;
+        }
+      }
+    });
+
+    const trend = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => ({
+      day: d,
+      completed: trendMap[d] || 0,
+    }));
+
+    setWeeklyTrend(trend);
+
+    // 3️⃣ Pie chart data
     const completed = storedTasks.filter((t) => t.status === "Completed").length;
     const pending = storedTasks.length - completed;
-
     setChartData([
       { name: "Completed", value: completed },
       { name: "Pending", value: pending },
     ]);
 
+    // 4️⃣ Category stats
     const grouped = storedTasks.reduce((acc, t) => {
       const cat = t.category || "Uncategorized";
       acc[cat] = acc[cat] || { total: 0, completed: 0 };
@@ -56,37 +126,20 @@ const ProgressTracker = () => {
           ? Math.round((stats.completed / stats.total) * 100)
           : 0,
     }));
-
     setCategoryStats(stats);
-
-    // Example weekly trend
-    const trend = [
-      { day: "Mon", completed: 2 },
-      { day: "Tue", completed: 3 },
-      { day: "Wed", completed: 1 },
-      { day: "Thu", completed: 4 },
-      { day: "Fri", completed: 2 },
-      { day: "Sat", completed: 0 },
-      { day: "Sun", completed: 0 },
-    ];
-    setWeeklyTrend(trend);
   }, []);
 
   const overallPercent = tasks.length
     ? Math.round(
-        (tasks.filter((t) => t.status === "Completed").length / tasks.length) *
-          100
+        (tasks.filter((t) => t.status === "Completed").length / tasks.length) * 100
       )
     : 0;
 
-  const streakDays = 3; // Example
-  const weeklyGoal = 20; // Example
-  const tasksCompletedThisWeek = weeklyTrend.reduce(
-    (sum, d) => sum + d.completed,
-    0
-  );
-  const weeklyGoalPercent = Math.round(
-    (tasksCompletedThisWeek / weeklyGoal) * 100
+  const weeklyGoal = 10; // ✅ you can change this!
+  const tasksCompletedThisWeek = weeklyTrend.reduce((sum, d) => sum + d.completed, 0);
+  const weeklyGoalPercent = Math.min(
+    Math.round((tasksCompletedThisWeek / weeklyGoal) * 100),
+    100
   );
 
   return (
@@ -165,10 +218,7 @@ const ProgressTracker = () => {
                     dataKey="value"
                   >
                     {chartData.map((entry, i) => (
-                      <Cell
-                        key={`cell-${i}`}
-                        fill={COLORS[i % COLORS.length]}
-                      />
+                      <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip />
