@@ -46,7 +46,8 @@
 }
 
 .back-button:hover {
-  background: linear-gradient(135deg, #555bf6, #7d5bf6);
+  background: whitesmoke;
+  color: black;
   transform: translateY(-2px);
 }
 

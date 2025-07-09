@@ -54,30 +54,38 @@ const ManageTasks = () => {
       <h2>🗂️ Manage Tasks (Kanban Board)</h2>
 
       <div className="kanban-board">
-        <KanbanColumn
-          title="📝 To Do"
-          tasks={todoTasks}
-          allTasks={tasks}
-          updateStatus={updateStatus}
-          deleteTask={deleteTask}
-          saveEditedTask={saveEditedTask}
-        />
-        <KanbanColumn
-          title="🚧 In Progress"
-          tasks={inProgressTasks}
-          allTasks={tasks}
-          updateStatus={updateStatus}
-          deleteTask={deleteTask}
-          saveEditedTask={saveEditedTask}
-        />
-        <KanbanColumn
-          title="✅ Completed"
-          tasks={completedTasks}
-          allTasks={tasks}
-          updateStatus={updateStatus}
-          deleteTask={deleteTask}
-          saveEditedTask={saveEditedTask}
-        />
+        {todoTasks.length > 0 && (
+          <KanbanColumn
+            title="📝 To Do"
+            tasks={todoTasks}
+            allTasks={tasks}
+            updateStatus={updateStatus}
+            deleteTask={deleteTask}
+            saveEditedTask={saveEditedTask}
+          />
+        )}
+
+        {inProgressTasks.length > 0 && (
+          <KanbanColumn
+            title="🚧 In Progress"
+            tasks={inProgressTasks}
+            allTasks={tasks}
+            updateStatus={updateStatus}
+            deleteTask={deleteTask}
+            saveEditedTask={saveEditedTask}
+          />
+        )}
+
+        {completedTasks.length > 0 && (
+          <KanbanColumn
+            title="✅ Completed"
+            tasks={completedTasks}
+            allTasks={tasks}
+            updateStatus={updateStatus}
+            deleteTask={deleteTask}
+            saveEditedTask={saveEditedTask}
+          />
+        )}
       </div>
     </div>
   );
@@ -93,23 +101,19 @@ const KanbanColumn = ({
 }) => (
   <div className="kanban-column">
     <h3>{title}</h3>
-    {tasks.length === 0 ? (
-      <p>No tasks</p>
-    ) : (
-      tasks.map((t) => {
-        const idx = allTasks.findIndex((task) => task === t);
-        return (
-          <TaskCard
-            key={idx}
-            task={t}
-            idx={idx}
-            updateStatus={updateStatus}
-            deleteTask={deleteTask}
-            saveEditedTask={saveEditedTask}
-          />
-        );
-      })
-    )}
+    {tasks.map((t) => {
+      const idx = allTasks.findIndex((task) => task === t);
+      return (
+        <TaskCard
+          key={idx}
+          task={t}
+          idx={idx}
+          updateStatus={updateStatus}
+          deleteTask={deleteTask}
+          saveEditedTask={saveEditedTask}
+        />
+      );
+    })}
   </div>
 );
 
