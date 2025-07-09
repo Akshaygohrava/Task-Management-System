@@ -1,112 +1,173 @@
-/* === ManageTasks Wrapper === */
-.manage-task-wrapper {
+/* === AddTask Wrapper === */
+.add-task-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 1rem;
   min-height: 100vh;
-  background: #f0f4f8;
+  width: 100%;
+  padding: 3rem 1rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* === Kanban Board === */
-.kanban-board {
+.add-task-wrapper.light {
+  background-color: #f4f4fa;
+}
+
+.add-task-wrapper.dark {
+  background: linear-gradient(
+    135deg,
+    #101024,
+    #121226,
+    #181e39,
+    #1e2b51,
+    #332757
+  );
+}
+
+/* === Back Button === */
+.back-button-wrapper {
+  width: 100%;
+  max-width: 420px;
+  align-self: flex-start;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.back-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #696ff6, #9d7bf6);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #555bf6, #7d5bf6);
+  transform: translateY(-2px);
+}
+
+/* === AddTask Container === */
+.add-task-container {
+  max-width: 420px;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.add-task-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.add-task-container form {
   display: flex;
-  gap: 2rem;
-  margin-top: 2rem;
-  overflow-x: auto;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.kanban-column {
-  flex: 1;
-  min-width: 300px;
-  background: #ffffff;
+.form-group,
+.field-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-fields {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.add-task-container input,
+.add-task-container textarea,
+.add-task-container select,
+.inline-category-input input {
+  padding: 0.75rem;
   border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  border: 1px solid #ccc;
 }
 
-.kanban-column h3 {
-  text-align: center;
-  margin-bottom: 1rem;
+.inline-category-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.kanban-column p {
-  text-align: center;
-  font-style: italic;
-  color: #777;
-}
-
-/* === Task Card === */
-.task-card {
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  transition: transform 0.2s ease;
-}
-
-.task-card:hover {
-  transform: translateY(-4px);
-}
-
-.task-header {
+.btn-group {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  gap: 1rem;
 }
 
-.status-badge {
-  background: #eee;
-  border-radius: 20px;
-  padding: 2px 8px;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.task-info p {
-  margin: 0.5rem 0;
-}
-
-.task-actions {
-  margin-top: 1rem;
-}
-
-.task-actions button {
-  margin-right: 0.5rem;
-  padding: 6px 12px;
+.small-btn {
+  font-size: 0.9rem;
+  padding: 0.6rem 2rem;
+  background: linear-gradient(135deg, #63ffb9, #8d75bb);
+  color: #000;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
 
-.inprogress-btn {
-  background: #ffc107;
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.cancel-btn {
+  background: #ccc;
+}
+
+/* === Dark Mode === */
+.add-task-container.dark {
+  background: rgba(105, 111, 246, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(105, 111, 246, 0.3);
+  box-shadow: 0 8px 24px rgba(105, 111, 246, 0.15);
   color: #fff;
 }
 
-.complete-btn {
-  background: #28a745;
+.add-task-container.dark input,
+.add-task-container.dark textarea,
+.add-task-container.dark select {
+  background-color: rgba(217, 217, 217, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.add-task-container.dark h2 {
   color: #fff;
 }
 
-.inprogress-btn:hover {
-  background: #e0a800;
+.add-task-container.dark select option {
+  background-color: #1e2b51;
+  color: #fff;
 }
 
-.complete-btn:hover {
-  background: #218838;
+/* === Light Mode === */
+.add-task-container.light {
+  background: rgba(187, 163, 208, 0.57);
+  border: 1px solid #c7b8f5;
+  color: #14141a;
 }
 
-/* === Responsive === */
-@media (max-width: 768px) {
-  .kanban-board {
-    flex-direction: column;
-  }
+.add-task-container.light input,
+.add-task-container.light textarea,
+.add-task-container.light select {
+  background: #fff;
+  border: 1px solid #c7b8f5;
+  color: #000;
+}
 
-  .kanban-column {
-    min-width: 100%;
-  }
+.add-task-container.light h2 {
+  color: #696ff6;
+}
+
+.add-task-container.light select option {
+  background-color: #fff;
+  color: #000;
 }
