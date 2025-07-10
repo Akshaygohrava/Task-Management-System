@@ -296,3 +296,36 @@
 }
 
 /* ✅ Other styles remain the same */
+
+
+/* === Beautiful Footer === */
+.app-footer {
+  width: 100%;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  border-radius: .8rem;
+}
+
+.app-footer p {
+  margin: 0.3rem 0;
+}
+
+.app-footer a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.app-footer a:hover {
+  color: #ffdd57;
+}
+
+.app-footer p:last-child {
+  margin-top: 0.6rem;
+  font-weight: 500;
+}

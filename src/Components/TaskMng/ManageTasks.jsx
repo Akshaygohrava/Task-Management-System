@@ -82,6 +82,19 @@ const ManageTasks = () => {
           />
         )}
       </div>
+
+      {/* ✅ Add beautiful footer here */}
+      <footer className="app-footer">
+  <p>
+    © <a href="https://www.calanjiyam.com" target="_blank" rel="noopener noreferrer">
+      Calanjiyam Consultancies and Technologies
+    </a> 2025 | TEAM-3 REACT + SPRINGBOOT
+  </p>
+  <p>
+    Shreya Jha | Akshay Gohrava | Dhruvil Purohit | Vinay Jaiswar
+  </p>
+</footer>
+
     </div>
   );
 };
