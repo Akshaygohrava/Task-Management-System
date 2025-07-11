@@ -26,10 +26,12 @@
   background: #fff;
   color: #000;
 }
-
+.h1-progress {
+  color: #fff;
+}
 .progress-container.dark {
   background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  color: #000;
 }
 
 .progress-container h2 {

@@ -151,7 +151,7 @@ const ProgressTracker = () => {
           </Link>
         </div>
 
-        <h2>📊 Progress Tracker</h2>
+        <h2 className="h1-progress">📊 Progress Tracker</h2>
 
         <div className="summary-cards">
           <div className="summary-card">
