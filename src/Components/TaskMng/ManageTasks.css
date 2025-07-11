@@ -247,14 +247,14 @@
   flex-wrap: wrap;
   gap: 2rem;
   margin-top: 2rem;
-  justify-content: center; /* ✅ center remaining columns */
+  justify-content: center; 
   width: 100%;
   max-width: 1200px;
 }
 
 .kanban-column {
-  flex: 1 1 300px; /* ✅ flexible grow & min size */
-  max-width: 400px; /* ✅ limit max size for balance */
+  flex: 1 1 300px; 
+  max-width: 400px; 
   background: #ffffff;
   border-radius: 12px;
   padding: 1rem;
@@ -288,14 +288,13 @@
 
 .badge-inprogress {
   background: #ffc107;
-  color: #333; /* darker text for yellow */
+  color: #333; 
 }
 
 .badge-completed {
   background: #28a745;
 }
 
-/* ✅ Other styles remain the same */
 
 
 /* === Beautiful Footer === */

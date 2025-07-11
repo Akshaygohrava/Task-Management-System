@@ -16,7 +16,7 @@ const AddTask = () => {
   const [categories, setCategories] = useState(["Personal", "Work", "Other"]);
   const [showInput, setShowInput] = useState(false);
 
-  // ✅ Generate today's date in YYYY-MM-DD format
+  
   const today = new Date().toISOString().split("T")[0];
 
   const resetForm = () => {
@@ -35,13 +35,13 @@ const AddTask = () => {
       priority,
       category,
       date,
-      status: "To Do" // ✅ Always needed for Kanban
+      status: "To Do" 
     };
     const existing = JSON.parse(localStorage.getItem("tasks")) || [];
     localStorage.setItem("tasks", JSON.stringify([...existing, task]));
     alert("Task added successfully!");
     resetForm();
-    navigate("/Dashboard"); // ✅ Go back to Kanban
+    navigate("/Dashboard"); 
   };
 
   const addCategory = () => {
@@ -142,7 +142,7 @@ const AddTask = () => {
             <input
               type="date"
               required
-              min={today}  // ✅ Restrict to today and future dates only!
+              min={today}  
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
@@ -162,7 +162,7 @@ const AddTask = () => {
           </div>
         </form>        
       </div>
-       {/* ✅ Add beautiful footer here */}
+     
       <footer className="app-footer">
   <p>
     © <a href="https://www.calanjiyam.com" target="_blank" rel="noopener noreferrer">

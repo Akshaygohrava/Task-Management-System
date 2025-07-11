@@ -1,10 +1,9 @@
-/* ✅ Fully updated centering */
 .progress-wrapper {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center; /* Center vertically too */
-  padding: 0; /* Remove extra padding at top */
+  align-items: center; 
+  padding: 0; 
 }
 
 .progress-container {
@@ -41,7 +40,7 @@
 }
 
 .back-button-wrapper {
-  margin: 0; /* ✅ No gap above the Back button */
+  margin: 0; 
 }
 
 .back-button {

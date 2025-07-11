@@ -275,7 +275,7 @@ const ProgressTracker = () => {
         <div className="motivation-box">
           💡 Keep up the momentum! Consistency is key.
         </div>
-         {/* ✅ Add beautiful footer here */}
+    
       <footer className="app-footer">
   <p>
     © <a href="https://www.calanjiyam.com" target="_blank" rel="noopener noreferrer">
