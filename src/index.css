@@ -125,3 +125,7 @@ body.light-mode {
   background: linear-gradient(135deg, #da24f6, #7b3eeb);
   color: #14141a;
 }
+
+.light-mode .h1-progress {
+  color: black;
+}
